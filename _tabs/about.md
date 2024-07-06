@@ -9,7 +9,7 @@ Welcome to my digital playground! I'm Kareem Schultz, a network engineer by prof
 
 ## Professional Background
 
-With over [X] years in the field of network engineering, I've honed my skills in designing, implementing, and maintaining complex network infrastructures. My expertise spans across:
+With over 15 years in the field of network engineering, I've honed my skills in designing, implementing, and maintaining complex network infrastructures. My expertise spans across:
 
 - Network design and optimization
 - Cloud architecture (AWS, Azure, GCP, Vultr)
