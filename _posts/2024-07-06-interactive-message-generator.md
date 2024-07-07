@@ -9,13 +9,90 @@ tags: [python, interactive-script, message-generator]
 
 Today, we're exploring a fun and interactive message generator that I've developed. This Python script creates personalized messages with a cool typing effect, making it perfect for romantic notes, friendly messages, or custom greetings!
 
-## The Code
+## Try It Out!
 
-Here's the Python script for our message generator:
+<div id="message-generator">
+  <label for="recipient-name">Recipient's Name:</label>
+  <input type="text" id="recipient-name" placeholder="Enter name">
+  <br><br>
+  <label for="message-type">Message Type:</label>
+  <select id="message-type">
+    <option value="romantic">Romantic</option>
+    <option value="friendly">Friendly</option>
+    <option value="custom">Custom</option>
+  </select>
+  <br><br>
+  <div id="custom-message-container" style="display: none;">
+    <label for="custom-message">Custom Message:</label>
+    <textarea id="custom-message" rows="4" cols="50"></textarea>
+  </div>
+  <br>
+  <button onclick="generateMessage()">Generate Message</button>
+  <div id="message-output"></div>
+</div>
 
-<script src="https://gist.github.com/kareemschultz/b8c43ed1df19b6dae887bda3cadf9c9f.js"></script>
+<script>
+function generateMessage() {
+  const name = document.getElementById('recipient-name').value;
+  const messageType = document.getElementById('message-type').value;
+  const customMessage = document.getElementById('custom-message').value;
 
-You can copy this code and run it locally on your machine to generate personalized messages.
+  fetch('https://your-domain.com:5550/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: name,
+      type: messageType,
+      custom_message: customMessage
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    const outputDiv = document.getElementById('message-output');
+    outputDiv.innerHTML = '';
+    let i = 0;
+    function typeWriter() {
+      if (i < data.message.length) {
+        outputDiv.innerHTML += data.message.charAt(i) === '\n' ? '<br>' : data.message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+    typeWriter();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    document.getElementById('message-output').innerHTML = 'An error occurred. Please try again.';
+  });
+}
+
+document.getElementById('message-type').addEventListener('change', function() {
+  const customMessageContainer = document.getElementById('custom-message-container');
+  customMessageContainer.style.display = this.value === 'custom' ? 'block' : 'none';
+});
+</script>
+
+<style>
+#message-generator {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+#message-output {
+  white-space: pre-wrap;
+  font-family: monospace;
+  margin-top: 20px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+</style>
 
 ## How It Works
 
@@ -32,21 +109,4 @@ The script performs the following steps:
 - Option to create a custom message
 - Simulated typing effect for a more interactive display
 
-## Running the Script
-
-To run this script:
-
-1. Copy the code from the Gist above.
-2. Paste it into a new file named `message_generator.py`.
-3. Open a terminal or command prompt.
-4. Navigate to the directory containing your `message_generator.py` file.
-5. Run the script by typing `python message_generator.py`.
-6. Follow the prompts to generate your personalized message!
-
-Feel free to modify the script to add more message templates or customize the existing ones to suit your needs!
-
-## Conclusion
-
-This interactive message generator showcases how Python can be used to create fun, practical scripts. It's a great starting point for those learning Python, demonstrating concepts like functions, user input, and string formatting.
-
-Try it out and have fun creating personalized messages for your friends and loved ones!
+[Rest of your post content...]
