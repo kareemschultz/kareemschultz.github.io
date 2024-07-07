@@ -4,7 +4,7 @@ function generateMessage() {
   const messageType = document.getElementById('message-type').value;
   const customMessage = document.getElementById('custom-message').value;
 
-  fetch('https://karetech.us:5550/generate', {
+  fetch('http://github.karetechsolutions.com/generate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
